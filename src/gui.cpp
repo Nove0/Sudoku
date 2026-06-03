@@ -76,23 +76,24 @@ void Gui::input()
                     current_button->on_ok(this);
                 }
             }
+            int board_size = game->board.size();
             if(e.key.code == sf::Keyboard::Right || e.key.code == sf::Keyboard::D)
             {
-                current_selected_cell.x = (current_selected_cell.x + 1) % game->board.size();
+                current_selected_cell.x = (current_selected_cell.x + 1) % board_size;
             }
             else if(current_selected_cell.x != -1)
             {
                 if(e.key.code == sf::Keyboard::Left || e.key.code == sf::Keyboard::A)
                 {
-                    current_selected_cell.x = (current_selected_cell.x - 1) % game->board.size();
+                    current_selected_cell.x = (((current_selected_cell.x - 1) % board_size) + board_size) % board_size;
                 }
                 else if(e.key.code == sf::Keyboard::Up || e.key.code == sf::Keyboard::W)
                 {
-                    current_selected_cell.y = (current_selected_cell.y - 1) % game->board.size();
+                    current_selected_cell.y = (((current_selected_cell.y - 1) % board_size) + board_size) % board_size;
                 }
                 else if(e.key.code == sf::Keyboard::Down || e.key.code == sf::Keyboard::S)
                 {
-                    current_selected_cell.y = (current_selected_cell.y + 1) % game->board.size();
+                    current_selected_cell.y = (current_selected_cell.y + 1) % board_size;
                 }
                 else if(e.key.code == sf::Keyboard::BackSpace || e.key.code == sf::Keyboard::Delete)
                 {
@@ -102,7 +103,7 @@ void Gui::input()
         }
         else if(e.type == sf::Event::TextEntered)
         {
-            int n = game->board.size();
+            int n = board_size;
             auto c = e.text.unicode;
             int i_c = c - '0';
             std::string i_s = std::to_string(i_c);
